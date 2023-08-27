@@ -12,7 +12,6 @@ public class MyTestController {
 
 
     @PostMapping(value = "/create")
-    @Validated
     public ResponseEntity<MyTestObject> create(@RequestBody MyTestObject object) {
         MyTestObject testObject = new MyTestObject();
         testObject.setName(object.getName());
