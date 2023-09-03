@@ -14,22 +14,79 @@
         <java.version>17</java.version>
         <lombok.version>1.18.28</lombok.version>
         <junit-jupiter.version>5.10.0</junit-jupiter.version>
+        <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
+        <openapi-generator-maven-plugin.version>6.6.0</openapi-generator-maven-plugin.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter</artifactId>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- OpenApi -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+        </dependency>
+    </dependencies>
 
 
+    <build>
+        <testOutputDirectory>${test.output}</testOutputDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>SCHOOL_MANAGER_API</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatorName>spring</generatorName>
+                            <inputSpec>${project.basedir}/src/main/resources/api.yml</inputSpec>
+                            <output>${project.build.directory}/generated-sources/</output>
+                            <apiPackage>com.hillel.api</apiPackage>
+                            <modelPackage>com.hillel.model</modelPackage>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <enablePostProcessFile>true</enablePostProcessFile>
+                            <configOptions>
+                                <useJakartaEe>true</useJakartaEe>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useTags>true</useTags>
+                                <dateLibrary>legacy</dateLibrary>
+                                <library>spring-boot</library>
+                                <disallowAdditionalPropertiesIfNotPresent>
+                                    false
+                                </disallowAdditionalPropertiesIfNotPresent>
+                            </configOptions>
+                            <globalProperties>
+                                <skipFormModel>false</skipFormModel>
+                            </globalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
 
 </project>
 
