@@ -1,0 +1,254 @@
+openapi: 3.0.3
+
+info:
+  title: School manager
+  description: |
+    Application for managing students in school
+  version: 0.0.1
+
+servers:
+  - url: https://{developmentStage}.com/{apiVersion}
+    variables:
+      developmentStage:
+        default: school-manager
+        enum:
+          - school-manager
+          - school-manager-stage
+          - school-manager-dev
+      apiVersion:
+        default: api/v1
+        description: Version of application
+
+tags:
+  - name: StudentManager
+    description: Api to manage students in school
+
+
+paths:
+  /student:
+    post:
+      tags:
+        - StudentManager
+      summary: creates a Student object
+      description: |
+        this is an endpoint that creates Student.
+        It receives object (type Student) in request body 
+        and saves object in database
+      operationId: addStudent
+      parameters:
+        - in: header
+          name: debug
+          schema:
+            type: integer
+            enum: [ 0, 1 ]
+            default: 0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+            examples:
+              student:
+                $ref: '#/components/examples/Student'
+      responses:
+        '201':
+          description: Returns created Student instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+              examples:
+                student:
+                  $ref: '#/components/examples/Student'
+          links:
+            GetStudentById:
+              operationId: getStudentById
+              parameters:
+                id: '$response.body#/id'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /student/{id}:
+    get:
+      tags:
+        - StudentManager
+      summary: returns a Student object by id
+      description: |
+        this is an endpoint that returns Student instance by it's id.
+        It receives id (type integer) in path parameters
+        and returns object from database
+      operationId: getStudentById
+      parameters:
+        - name: id
+          in: path
+          description: Student Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Returns Student instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+              examples:
+                student:
+                  $ref: '#/components/examples/Student'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+
+
+  /updateStudent:
+    put:
+      tags:
+        - StudentManager
+      summary: updates a Student object by id
+      description: |
+        this is an endpoint that updates Student instance by it's id.
+        It receives id (type integer) in path parameters,  
+        name (type string), age (type integer), averageMark (type integer),
+        schoolName (type string) and teachers (type array of strings) in query parameters
+        and updates object in database
+      operationId: updateStudentById
+      parameters:
+        - name: id
+          in: query
+          description: Student Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                studentName:
+                  type: string
+                age:
+                  type: integer
+                averageMark:
+                  type: number
+                  format: double
+                schoolName:
+                  type: string
+                teachers:
+                  type: array
+                  items:
+                    type: string
+            examples:
+              studentUpdate:
+                $ref: '#/components/examples/StudentUpdate'
+      responses:
+        '200':
+          description: Returns Student instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /subscribe/{id}:
+    post:
+      summary: Subscribe to updates on students average mark by id
+      tags:
+        - StudentManager
+      parameters:
+        - name: id
+          in: path
+          description: Student Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                callbackUrl:
+                  type: string
+                  format: url
+              required:
+                - callbackUrl
+      responses:
+        '201':
+          description: Subscription created
+
+
+
+
+
+
+
+components:
+  responses:
+    NotFound:
+      description: Resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+
+  schemas:
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        age:
+          type: integer
+        averageMark:
+          type: number
+          format: double
+        schoolName:
+          type: string
+        teachers:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - name
+        - age
+        - schoolName
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+
+  examples:
+    Student:
+      summary: An example of a student
+      value:
+        id: 1
+        name: John
+        age: 16
+        averageMark: 90
+        schoolName: Cool School
+        teachers: [ "Mr. Smith", "Mr. Doe", "Ms. Johnson" ]
+    StudentUpdate:
+      summary: An example of a student for a updateStudentById endpoint
+      value:
+        name: Bill
+        age: 13
+        averageMark: 95
+        schoolName: Cool School
+        teachers: [ "Mr. Smith", "Mr. Doe", "Ms. Johnson" ]
+
