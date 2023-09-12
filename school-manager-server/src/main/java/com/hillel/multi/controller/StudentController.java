@@ -10,11 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @Validated
 @RequestMapping("/api/v1")
 public class StudentController implements StudentManagerApi {
+    //    @Autowired
+//    private StudentService studentService;
     @Override
     public ResponseEntity<Student> addStudent(
             @Valid @RequestBody Student student,
@@ -48,4 +52,32 @@ public class StudentController implements StudentManagerApi {
         return ResponseEntity.ok(student);
 
     }
+
+    @GetMapping("/students/school/{schoolId}")
+    public ResponseEntity<List<Student>> getAllStudentsBySchoolId(@PathVariable Long schoolId) {
+        return null;
+    }
+
+    @GetMapping("/students/teacher/{teacherId}")
+    public ResponseEntity<List<Student>> getAllStudentsByTeacherId(@PathVariable Long teacherId) {
+        return null;
+    }
+
+    @DeleteMapping("/student/{id}")
+    public ResponseEntity<String> deleteStudentById(@PathVariable Long id) {
+        return ResponseEntity.ok(String.format("Student with id %s was deleted successfully", id));
+    }
+
+    @PatchMapping("/student/{studentId}/school/{schoolId}")
+    public ResponseEntity<Student> updateSchoolById(@PathVariable Long studentId,
+                                                    @PathVariable Long schoolId) {
+        return null;
+    }
+
+    @PatchMapping("/student/{studentId}/teacher/{teacherId}")
+    public ResponseEntity<Student> updateTeacherById(@PathVariable Long studentId,
+                                                     @PathVariable Long teacherId) {
+        return null;
+    }
+
 }
