@@ -1,4 +1,4 @@
-package com.hillel.multi.controller;
+package com.hillel.multi.presentation.controller;
 
 import com.hillel.multi.persistent.entity.ClassRoom;
 import com.hillel.multi.persistent.entity.ClassRoomState;
