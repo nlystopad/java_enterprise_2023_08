@@ -1,0 +1,6 @@
+{
+  "description":"Something went wrong",
+  "exceptionMessage": "Student with id 10 already exists",
+  "errorType" :"Entity is already exist found",
+  "rootCause": "This entity already exists in the database"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "10",
+  "name": "John",
+  "age": "12",
+  "averageMark": "95",
+  "schoolName": "Best school in the world",
+  "teachers": ["Mr. Smith", "Ms. Johnson", "Mr. Williamson"]
+}

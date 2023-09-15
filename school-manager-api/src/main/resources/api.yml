@@ -102,7 +102,7 @@ paths:
 
 
 
-  /updateStudent:
+  /updateStudent/id:
     put:
       tags:
         - StudentManager
@@ -116,7 +116,7 @@ paths:
       operationId: updateStudentById
       parameters:
         - name: id
-          in: query
+          in: path
           description: Student Id
           required: true
           schema:

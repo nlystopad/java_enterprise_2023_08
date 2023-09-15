@@ -1,0 +1,7 @@
+{
+  "name": "Will",
+  "age": "15",
+  "averageMark": "90",
+  "schoolName": "Average school",
+  "teachers": ["Mr. Williams", "Mr. Black", "Ms. Davis", "Ms. James"]
+}
