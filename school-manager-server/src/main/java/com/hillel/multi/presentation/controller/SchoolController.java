@@ -1,6 +1,8 @@
 package com.hillel.multi.presentation.controller;
 
 import com.hillel.multi.persistent.entity.School;
+import com.hillel.multi.service.SchoolServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -9,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @RequestMapping("/api/v1")
 public class SchoolController {
-    //    @Autowired
-    //    private SchoolService schoolService;
+    @Autowired
+    private SchoolServiceImpl schoolService;
 
     @PostMapping("/school")
     public ResponseEntity<School> addSchool(@RequestBody School school) {
