@@ -1,0 +1,15 @@
+create sequence class_rooms_seq start with 1 increment by 50;
+create sequence schools_seq start with 1 increment by 50;
+create sequence students_seq start with 1 increment by 50;
+create sequence teachers_seq start with 1 increment by 50;
+create table class_rooms (id bigint not null, school_id bigint, state varchar(255) check (state in ('GOOD','OK','BAD')), primary key (id));
+create table schools (id bigint not null, address varchar(255), name varchar(255), primary key (id));
+create table students (age float(53), average_mark float(53), id bigint not null, school_id bigint, name varchar(255), primary key (id));
+create table teachers (age integer, class_room_id bigint unique, id bigint not null, school_id bigint, first_name varchar(255), last_name varchar(255), role varchar(255) check (role in ('TEACHER','HEAD_OF_CLASS','PRINCIPAL')), primary key (id));
+create table teachers_students (student_id bigint not null, teacher_id bigint not null);
+alter table if exists class_rooms add constraint FKrahkoi4w1ej82984s5ou31cnf foreign key (school_id) references schools;
+alter table if exists students add constraint FKdojmg8v3rw2ow4dev2b8q5oqq foreign key (school_id) references schools;
+alter table if exists teachers add constraint FKscwnndv2qaabkfbfuyh4v3xi3 foreign key (class_room_id) references class_rooms;
+alter table if exists teachers add constraint FK25tvrvw3ww2p7mbt62abrbwev foreign key (school_id) references schools;
+alter table if exists teachers_students add constraint FKr2jjh7fdvijix8q8hervypaes foreign key (student_id) references students;
+alter table if exists teachers_students add constraint FKs9qt95drbmg1yu66e24njnxl0 foreign key (teacher_id) references teachers;

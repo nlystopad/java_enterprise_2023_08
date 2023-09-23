@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-//@Entity
+@Entity
 @Table(name = "students")
 public class Student {
     @Id
@@ -19,7 +19,7 @@ public class Student {
     private String name;
 
     @Column(name = "age")
-    private Double age;
+    private Integer age;
 
     @Column(name = "average_mark")
     private Double averageMark;

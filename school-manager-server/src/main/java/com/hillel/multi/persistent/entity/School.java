@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 @Getter
 @Setter
-//@Entity
+@Entity
 @Table(name = "schools")
 @Validated
 public class School {

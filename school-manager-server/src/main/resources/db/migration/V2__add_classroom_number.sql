@@ -1,0 +1,2 @@
+ALTER TABLE class_rooms ADD number INT;
+ALTER TABLE students ALTER COLUMN age TYPE INT;

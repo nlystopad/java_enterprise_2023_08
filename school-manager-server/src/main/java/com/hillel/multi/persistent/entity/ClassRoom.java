@@ -6,12 +6,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-//@Entity
+@Entity
 @Table(name = "class_rooms")
 public class ClassRoom {
     @Id
     @GeneratedValue
     private Long id;
+
+    private Integer number;
 
     @Enumerated(EnumType.STRING)
     private ClassRoomState state;
@@ -19,7 +21,7 @@ public class ClassRoom {
     @OneToOne(mappedBy = "classRoom")
     private Teacher teacher;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_id", referencedColumnName = "id")
     private School school;
 
