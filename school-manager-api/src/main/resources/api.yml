@@ -160,6 +160,7 @@ paths:
       summary: Subscribe to updates on students average mark by id
       tags:
         - StudentManager
+      operationId: subscribeById
       parameters:
         - name: id
           in: path

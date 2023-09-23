@@ -3,7 +3,6 @@ package com.hillel.multi.service;
 import com.hillel.multi.persistent.entity.School;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface SchoolService {
     School createSchool(School school); // http post
 
