@@ -1,6 +1,6 @@
 package com.hillel.junit;
 
-import com.hillel.multi.persistent.entity.School;
+import com.hillel.multi.persistent.entity.SchoolEntity;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -13,12 +13,12 @@ public class SchoolTest {
 
     @Test
     public void testSchoolAddressConstraint() {
-        School school1 = new School();
+        SchoolEntity school1 = new SchoolEntity();
         school1.setAddress("address");
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<School>> validate = validator.validate(school1);
+        Set<ConstraintViolation<SchoolEntity>> validate = validator.validate(school1);
 
         System.out.println(validate);
 
