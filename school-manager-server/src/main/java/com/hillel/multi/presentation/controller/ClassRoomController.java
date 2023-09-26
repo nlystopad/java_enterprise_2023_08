@@ -1,8 +1,8 @@
 package com.hillel.multi.presentation.controller;
 
-import com.hillel.multi.persistent.entity.ClassRoom;
+import com.hillel.multi.persistent.entity.ClassRoomEntity;
 import com.hillel.multi.persistent.entity.ClassRoomState;
-import com.hillel.multi.persistent.entity.School;
+import com.hillel.multi.persistent.entity.SchoolEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,28 +17,28 @@ public class ClassRoomController {
 //    private ClassRoomService classRoomService;
 
     @PostMapping("/classroom")
-    public ResponseEntity<ClassRoom> addClassRoom(@RequestBody ClassRoom room) {
+    public ResponseEntity<ClassRoomEntity> addClassRoom(@RequestBody ClassRoomEntity room) {
         return null;
     }
 
     @GetMapping("/classroom/{id}")
-    public ResponseEntity<ClassRoom> getClassRoomById(@PathVariable Long id) {
+    public ResponseEntity<ClassRoomEntity> getClassRoomById(@PathVariable Long id) {
         return null;
     }
 
     @GetMapping("/classroom/school/{schoolId}")
-    public ResponseEntity<List<ClassRoom>> getAllClassRoomsBySchoolId(@PathVariable School schoolId) {
+    public ResponseEntity<List<ClassRoomEntity>> getAllClassRoomsBySchoolId(@PathVariable Long schoolId) {
         return null;
     }
 
     @GetMapping("/classroom")
-    public ResponseEntity<List<ClassRoom>> getClassRoomById(@RequestParam ClassRoomState state) {
+    public ResponseEntity<List<ClassRoomEntity>> getClassRoomById(@RequestParam ClassRoomState state) {
         return null;
     }
 
     @PutMapping("/classroom/{id}")
-    public ResponseEntity<ClassRoom> getClassRoomById(@PathVariable Long id,
-                                                      @RequestBody ClassRoom classRoom) {
+    public ResponseEntity<ClassRoomEntity> getClassRoomById(@PathVariable Long id,
+                                                            @RequestBody ClassRoomEntity classRoomEntity) {
         return null;
     }
 
@@ -48,14 +48,14 @@ public class ClassRoomController {
     }
 
     @PatchMapping("/classroom/{classRoomId}/teacher/{teacherId}")
-    public ResponseEntity<ClassRoom> updateTeacherById(@PathVariable Long classRoomId,
-                                                       @PathVariable Long teacherId) {
+    public ResponseEntity<ClassRoomEntity> updateTeacherById(@PathVariable Long classRoomId,
+                                                             @PathVariable Long teacherId) {
         return null;
     }
 
     @PatchMapping("/classroom/{classRoomId}/school/{schoolId}")
-    public ResponseEntity<ClassRoom> updateSchoolById(@PathVariable Long classRoomId,
-                                                      @PathVariable Long schoolId) {
+    public ResponseEntity<ClassRoomEntity> updateSchoolById(@PathVariable Long classRoomId,
+                                                            @PathVariable Long schoolId) {
         return null;
     }
 }

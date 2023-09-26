@@ -1,6 +1,7 @@
 package com.hillel.multi.service;
 
 import com.hillel.model.Student;
+import com.hillel.multi.persistent.entity.StudentEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService{
     @Override
-    public Student addStudent(Student student) {
+    public Student addStudent(StudentEntity student) {
         return null;
     }
 
@@ -28,7 +29,7 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student updateStudentById(Long studentId, Student student) {
+    public Student updateStudentById(Long studentId, StudentEntity student) {
         return null;
     }
 

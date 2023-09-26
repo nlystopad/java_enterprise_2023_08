@@ -1,6 +1,6 @@
 package com.hillel.multi.springBootTest;
 
-import com.hillel.multi.persistent.entity.School;
+import com.hillel.multi.persistent.entity.SchoolEntity;
 import com.hillel.multi.service.SchoolServiceImpl;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.ClassicConfiguration;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 @SpringBootTest(classes = SchoolSpringBootTest.class)
 @ComponentScan("com.hillel.multi")
@@ -47,7 +45,7 @@ public class SchoolSpringBootTest {
     @Test
     public void testSchool() {
         flyway.validate();
-        School school = new School();
+        SchoolEntity school = new SchoolEntity();
         school.setAddress("12, something street");
 
         schoolService.validateSchool(school);

@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "students")
-public class Student {
+public class StudentEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,9 +26,9 @@ public class Student {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_id")
-    private School school;
+    private SchoolEntity school;
 
     @ManyToMany(mappedBy = "students")
-    private List<Teacher> teachers;
+    private List<TeacherEntity> teachers;
 
 }

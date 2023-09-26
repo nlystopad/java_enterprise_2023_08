@@ -22,6 +22,8 @@ servers:
 tags:
   - name: StudentManager
     description: Api to manage students in school
+  - name: SchoolManager
+    description: Api to manage schools
 
 
 paths:
@@ -102,7 +104,7 @@ paths:
 
 
 
-  /updateStudent/id:
+  /updateStudent/{id}:
     put:
       tags:
         - StudentManager
@@ -127,24 +129,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                studentName:
-                  type: string
-                age:
-                  type: integer
-                averageMark:
-                  type: number
-                  format: double
-                schoolName:
-                  type: string
-                teachers:
-                  type: array
-                  items:
-                    type: string
+              $ref: '#/components/schemas/Student'
             examples:
               studentUpdate:
-                $ref: '#/components/examples/StudentUpdate'
+                $ref: '#/components/examples/Student'
       responses:
         '200':
           description: Returns Student instance
@@ -184,10 +172,145 @@ paths:
         '201':
           description: Subscription created
 
+  /school:
+    post:
+      tags:
+        - SchoolManager
+      summary: creates a school entity in the database
+      description: |
+        this is an endpoint that creates School instance.
+        It receives School object in request body and creates object in database
+      operationId: createSchool
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/School'
+            examples:
+              school:
+                $ref: '#/components/examples/School'
+      responses:
+        '201':
+          description: School created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+    get:
+      tags:
+        - SchoolManager
+      summary: retrieves a school entities from the database by their name
+      description: |
+        this is an endpoint that retrieves School instances from database.
+        It receives school name (type string) in request parameters and gets all objects from database 
+        with proper name
+      operationId: getSchoolByName
+      parameters:
+        - name: name
+          in: query
+          description: school name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200' :
+          description: all schools entities with such name were successfully retrieved from database
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
 
+  /school/{id}:
+    get:
+      tags:
+        - SchoolManager
+      summary: retrieves a school entity from the database by its id
+      description: |
+        this is an endpoint that retrieves School instance from database.
+        It receives school id (type integer) in path and gets school type object from database
+      operationId: getSchoolById
+      parameters:
+        - name: id
+          in: path
+          description: school id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: school entity with such id was successfully retrieved from database
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
+    put:
+      tags:
+        - SchoolManager
+      summary: updates a school entity in the database by its id
+      description: |
+        this is an endpoint that updates School instance in database.
+        It receives school id (type integer) in path and school type object in request body
+        and updates entity in database if it exists
+      operationId: updateSchoolById
+      parameters:
+        - name: id
+          in: path
+          description: school id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/School'
+            examples:
+              school:
+                $ref: '#/components/examples/School'
+      responses:
+        '200':
+          description: School was updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
-
+    delete:
+      tags:
+        - SchoolManager
+      summary: deletes a school entity from the database by its id
+      description: |
+        this is an endpoint that deletes a School instance from the database.
+        It receives school id (type integer) in path and deletes entity in database if it exists
+      operationId: deleteSchoolById
+      parameters:
+        - name: id
+          in: path
+          description: school id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: School was deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          $ref: '#/components/responses/NotFound'
 
 
 components:
@@ -216,15 +339,27 @@ components:
           format: double
         schoolName:
           type: string
-        teachers:
-          type: array
-          items:
-            type: string
       required:
-        - id
         - name
         - age
-        - schoolName
+
+
+    School:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        address:
+          type: string
+          pattern: '\d+, .+'
+      required:
+        - name
+        - age
+
+
 
     Error:
       type: object
@@ -243,13 +378,10 @@ components:
         age: 16
         averageMark: 90
         schoolName: Cool School
-        teachers: [ "Mr. Smith", "Mr. Doe", "Ms. Johnson" ]
-    StudentUpdate:
-      summary: An example of a student for a updateStudentById endpoint
+    School:
+      summary: An example of a school
       value:
-        name: Bill
-        age: 13
-        averageMark: 95
-        schoolName: Cool School
-        teachers: [ "Mr. Smith", "Mr. Doe", "Ms. Johnson" ]
+        id: 5
+        name: Best School in the world
+        address: 21, The Luckiest street
 

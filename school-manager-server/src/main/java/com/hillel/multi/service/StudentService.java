@@ -1,11 +1,12 @@
 package com.hillel.multi.service;
 
 import com.hillel.model.Student;
+import com.hillel.multi.persistent.entity.StudentEntity;
 
 import java.util.List;
 
 public interface StudentService {
-    Student addStudent(Student student); // post
+    Student addStudent(StudentEntity student); // post
 
     Student getStudentById(Long id); //get
 
@@ -13,7 +14,7 @@ public interface StudentService {
 
     List<Student> getAllStudentsByTeacherId(Long teacherId); // get
 
-    Student updateStudentById(Long studentId, Student student); // put
+    Student updateStudentById(Long studentId, StudentEntity student); // put
 
     void deleteStudentById(Long studentId); // delete
 

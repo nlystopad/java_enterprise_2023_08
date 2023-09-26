@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "teachers")
-public class Teacher {
+public class TeacherEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,19 +26,19 @@ public class Teacher {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_id")
-    private School school;
+    private SchoolEntity school;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "teachers_students",
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private List<Student> students;
+    private List<StudentEntity> students;
 
     @Enumerated(EnumType.STRING)
     private TeacherRole role;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_room_id", referencedColumnName = "id")
-    private ClassRoom classRoom;
+    private ClassRoomEntity classRoom;
 
 }

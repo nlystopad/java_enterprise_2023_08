@@ -2,7 +2,6 @@ package com.hillel.multi.presentation.controller;
 
 import com.hillel.api.StudentManagerApi;
 import com.hillel.model.Student;
-import com.hillel.model.UpdateStudentByIdRequest;
 import com.hillel.multi.inftastructure.exceptions.AlreadyExistException;
 import com.hillel.multi.service.StudentServiceImpl;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,9 +30,8 @@ public class StudentController implements StudentManagerApi {
         if (student.getId() == 10L) { // don't have DB rn. so let's just imagine we already have entity with id 10
             throw new AlreadyExistException(String.format("Student with id %d already exists", student.getId()));
         }
-        Student student1 = new Student(student.getId(), student.getName(), student.getAge(), student.getSchoolName());
+        Student student1 = new Student(student.getName(), student.getAge());
         student1.setAverageMark(student.getAverageMark());
-        student1.setTeachers(student.getTeachers());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(student1);
 
@@ -52,15 +50,14 @@ public class StudentController implements StudentManagerApi {
 
     @Override
     public ResponseEntity<Student> updateStudentById(@Parameter(name = "id", description = "Student Id", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id,
-                                                     @Parameter(name = "UpdateStudentByIdRequest", description = "", required = true) @Valid @RequestBody UpdateStudentByIdRequest updateStudentByIdRequest) {
-        Student student = new Student();
-        student.setId(id);
-        student.setName(updateStudentByIdRequest.getStudentName());
-        student.setAge(updateStudentByIdRequest.getAge());
-        student.setSchoolName(updateStudentByIdRequest.getSchoolName());
-        student.setAverageMark(updateStudentByIdRequest.getAverageMark());
-        student.setTeachers(updateStudentByIdRequest.getTeachers());
-        return ResponseEntity.ok(student);
+                                                     @Parameter(name = "UpdateStudentByIdRequest", description = "", required = true) @Valid @RequestBody Student student) {
+        Student newStudent = new Student();
+        newStudent.setId(id);
+        newStudent.setName(student.getName());
+        newStudent.setAge(student.getAge());
+        newStudent.setSchoolName(student.getSchoolName());
+        newStudent.setAverageMark(student.getAverageMark());
+        return ResponseEntity.ok(newStudent);
 
     }
 

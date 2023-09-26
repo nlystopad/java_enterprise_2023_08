@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "schools")
 @Validated
-public class School {
+public class SchoolEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -25,13 +25,12 @@ public class School {
     private String address;
 
     @OneToMany(mappedBy = "school")
-    private List<Student> students;
+    private List<StudentEntity> students;
 
     @OneToMany(mappedBy = "school")
-    private List<Teacher> teachers;
+    private List<TeacherEntity> teachers;
 
     @OneToMany(mappedBy = "school")
-    private List<ClassRoom> classrooms;
-
+    private List<ClassRoomEntity> classrooms;
 
 }

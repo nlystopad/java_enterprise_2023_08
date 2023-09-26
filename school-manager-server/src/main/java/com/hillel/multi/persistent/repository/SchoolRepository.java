@@ -1,12 +1,15 @@
 package com.hillel.multi.persistent.repository;
 
-import com.hillel.multi.persistent.entity.School;
+import com.hillel.multi.persistent.entity.SchoolEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Component
-public interface SchoolRepository extends JpaRepository<School, Long> {
+public interface SchoolRepository extends JpaRepository<SchoolEntity, Long> {
 
-    School findByName(String name);
+    List<SchoolEntity> findByName(String name);
+
+
 }
