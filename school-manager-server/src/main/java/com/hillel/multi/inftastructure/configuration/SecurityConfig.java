@@ -34,8 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/api/v1/**").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/signup").permitAll()
-                        .requestMatchers("/authenticated").hasAnyAuthority(Role.USER))
+                        .requestMatchers("/signup/regular").permitAll()
+                        .requestMatchers("/authenticated").hasRole(Role.REGULAR_USER))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

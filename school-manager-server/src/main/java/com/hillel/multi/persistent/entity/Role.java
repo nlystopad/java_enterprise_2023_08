@@ -19,10 +19,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Role implements GrantedAuthority {
     public static final List<String> ROLES = new ArrayList<>();
-    public static final String USER = "USER";
+    public static final String REGULAR_USER = "REGULAR_USER";
     public static final String SUPER_USER = "SUPER_USER";
     static {
-        ROLES.add(USER);
+        ROLES.add(REGULAR_USER);
         ROLES.add(SUPER_USER);
     }
     @Getter

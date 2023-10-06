@@ -22,27 +22,21 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
-        Optional<User> byUsernameAndPassword = userService.findByUsernameAndPassword(username, password);
+        User byUsernameAndPassword = userService.findByUsernameAndPassword(username, password);
 
-        if (byUsernameAndPassword.isPresent()) {
-            User user = byUsernameAndPassword.get();
-            user.setToken(UUID.randomUUID().toString());
-            user.setExpirationDate(LocalDateTime.now().plusHours(12));
-            userService.save(user);
+        if (byUsernameAndPassword != null) {
+            byUsernameAndPassword.setToken(UUID.randomUUID().toString());
+            byUsernameAndPassword.setExpirationDate(LocalDateTime.now().plusHours(12));
+            userService.save(byUsernameAndPassword);
 
-            return ResponseEntity.ok(String.format("Successfully loged in. Your authentication token : {%s}", user.getToken()));
+            return ResponseEntity.ok(String.format("Successfully loged in. Your authentication token : {%s}", byUsernameAndPassword.getToken()));
         }
         return ResponseEntity.badRequest().body("Invalid username or password");
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/signup/regular")
     public ResponseEntity<User> addNewUser(@RequestBody UserDto userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());
-        if (userDto.getRoles() != null)
-            user.setAuthorities(userDto.getRoles().stream().map(Role::new).collect(Collectors.toList()));
-        else user.setAuthorities(List.of(new Role(Role.USER)));
+        User user = User.builder().username(userDto.getUsername()).password(userDto.getPassword()).build();
         User saved = userService.save(user);
 
         return ResponseEntity.ok(saved);

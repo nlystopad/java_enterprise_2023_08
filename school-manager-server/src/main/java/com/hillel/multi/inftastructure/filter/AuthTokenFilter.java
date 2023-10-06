@@ -26,7 +26,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        Optional<? extends UserDetails> userDetails = null;
+        UserDetails userDetails = null;
         String token = null;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
@@ -34,9 +34,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
 
         if (SecurityContextHolder.getContext().getAuthentication() == null
-                && userDetails != null && userDetails.isPresent()) {
-            UserDetails user = userDetails.get();
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                && userDetails != null) {
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authToken);
         }

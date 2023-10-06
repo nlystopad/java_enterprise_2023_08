@@ -6,13 +6,11 @@ import com.hillel.multi.persistent.repository.RoleRepository;
 import com.hillel.multi.persistent.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,10 +23,9 @@ public class UserServiceImpl {
     private UserDetailsService userDetailsService;
 
     public User save(User user) {
-        List<Role> authorities = (List<Role>) user.getAuthorities();
-        for (Role role: authorities) {
-            roleRepository.save(role);
-        }
+        if (user.getAuthorities() == null) user.setAuthorities(List.of(new Role("ROLE_" + Role.REGULAR_USER)));
+        roleRepository.save(user.getAuthorities().get(0));
+
         return userRepository.save(user);
     }
 
@@ -36,11 +33,11 @@ public class UserServiceImpl {
         return userDetailsService.loadUserByUsername(username);
     }
 
-    public Optional<? extends UserDetails> findByToken(String token) {
+    public UserDetails findByToken(String token) {
         return userRepository.findByToken(token);
     }
 
-    public Optional<User> findByUsernameAndPassword(String username, String password) {
+    public User findByUsernameAndPassword(String username, String password) {
         return userRepository.findByUsernameAndPassword(username, password);
     }
 }

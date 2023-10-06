@@ -1,5 +1,6 @@
 package com.hillel.multi.service;
 
+import com.hillel.multi.persistent.entity.User;
 import com.hillel.multi.persistent.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByUsername(username).
-                orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", username)));
+        User byUsername = repository.findByUsername(username);
+        if (byUsername == null) throw new UsernameNotFoundException(String.format("User %s not found", username));
+        return byUsername;
     }
 }
