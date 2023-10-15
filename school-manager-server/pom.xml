@@ -18,6 +18,7 @@
         <junit-suit-engine.version>1.8.1</junit-suit-engine.version>
         <testng.version>7.1.0</testng.version>
         <spring-cloud-contract-maven-plugin.version>4.0.3</spring-cloud-contract-maven-plugin.version>
+        <jar.final.name>school-manager</jar.final.name>
     </properties>
 
 
@@ -139,7 +140,19 @@
 
 
     <build>
+        <finalName>${jar.final.name}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-contract-maven-plugin</artifactId>
